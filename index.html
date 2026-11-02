@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17110f">
+<title>Academia Flamenca · Aprende guitarra y armonía</title>
+<style>
+:root{--bg:#17110f;--panel:#241a17;--panel2:#30221d;--cream:#f4ead9;--muted:#c4b4a1;--gold:#d7a85b;--red:#a94335;--line:#4b3930;--green:#9fc49a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0,#3b241c 0,transparent 35%),var(--bg);color:var(--cream);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:30px max(20px,calc((100vw - 1120px)/2));border-bottom:1px solid var(--line);background:#17110fdd}
+.brand{letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-size:.75rem;font-weight:800}
+h1{font:clamp(2rem,5vw,3.8rem)/1.05 Georgia,serif;margin:12px 0}
+header p{color:var(--muted);max-width:680px;margin:0}
+main{max-width:1120px;margin:auto;padding:24px 20px 70px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 24px}
+nav button,.btn{border:1px solid var(--line);background:var(--panel);color:var(--cream);padding:10px 15px;border-radius:999px;cursor:pointer;font-weight:650}
+nav button.active,.btn.primary{background:var(--gold);border-color:var(--gold);color:#21140e}
+button:hover{filter:brightness(1.12)}
+section.page{display:none}section.page.active{display:block}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:stretch}
+.panel{background:linear-gradient(145deg,var(--panel),#201714);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:18px}
+.hero .panel{margin:0}
+.kicker{color:var(--gold);font-size:.76rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+h2,h3{font-family:Georgia,serif;font-weight:500}h2{font-size:2rem;margin:5px 0 14px}h3{font-size:1.35rem;margin:0 0 8px}
+p{margin:8px 0;color:#e2d5c4}.muted{color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.tile{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:15px}
+.tile b{display:block;color:var(--gold);font-size:1.1rem}
+.palo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.palo{cursor:pointer;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;color:var(--cream)}
+.palo.selected{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
+.palo small{display:block;color:var(--muted);margin-top:5px}
+.detail{margin-top:14px}
+label{display:block;color:var(--muted);font-size:.9rem;margin:10px 0 5px}
+select,input{background:#160f0d;color:var(--cream);border:1px solid var(--line);border-radius:9px;padding:10px;font:inherit}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.chip{background:#3b2a22;border:1px solid #614536;border-radius:8px;padding:7px 11px;color:#ffe5bd;font-weight:700}
+.note{background:#39291f;border-left:3px solid var(--gold);padding:12px 14px;border-radius:8px;margin:14px 0;color:#f3dfc5}
+.warn{border-left-color:var(--red);background:#38211d}
+table{width:100%;border-collapse:collapse;margin-top:12px}td,th{border-bottom:1px solid var(--line);padding:9px;text-align:left}th{color:var(--gold)}
+.fretboard{overflow-x:auto;padding:12px 0}
+.string{display:flex;min-width:580px;align-items:center;gap:0;margin:7px 0}
+.string-name{width:34px;color:var(--gold);font-weight:800}
+.fret{width:44px;height:34px;border:1px solid #987d62;background:#3a2b22;display:grid;place-items:center;position:relative;color:#f3e5d0;font-size:.82rem}
+.fret:first-of-type{background:#211714}
+.fret.hit{background:var(--gold);color:#1d120d;font-weight:900}
+.fret small{font-size:.65rem}
+.progress{height:8px;background:#45342b;border-radius:20px;overflow:hidden;margin:12px 0}.progress span{display:block;height:100%;background:var(--gold);width:0;transition:width .2s}
+.answer{padding:10px;border-radius:9px;background:#1a1210;border:1px solid var(--line);margin:7px 0;cursor:pointer}
+.answer.correct{border-color:var(--green)}.answer.wrong{border-color:#d36d5d}
+footer{border-top:1px solid var(--line);padding:22px;text-align:center;color:var(--muted);font-size:.85rem}
+@media(max-width:720px){.hero{grid-template-columns:1fr}.tiles{grid-template-columns:1fr 1fr}header{padding:25px 20px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand">Escuela · Compás · Armonía</div>
+ <h1>Academia Flamenca</h1>
+ <p>Aprende a escuchar, comprender y tocar flamenco. De los palos y el compás a los acordes, las escalas y tus primeras falsetas.</p>
+</header>
+<main>
+<nav aria-label="Secciones">
+ <button class="active" data-page="inicio">Inicio</button><button data-page="palos">Palos</button><button data-page="armonia">Armonía</button><button data-page="guitarra">Mástil</button><button data-page="videos">Vídeos</button><button data-page="practica">Practicar</button>
+</nav>
+
+<section id="inicio" class="page active">
+ <div class="hero">
+  <div class="panel"><div class="kicker">Tu camino empieza aquí</div><h2>No memorices solamente. Entiende lo que tocas.</h2>
+   <p>Esta escuela está pensada para guitarra flamenca y teoría musical explicada paso a paso. Puedes empezar por los palos, estudiar armonía o entrenar las notas en el mástil.</p>
+   <div class="row" style="margin-top:18px"><button class="btn primary" onclick="showPage('palos')">Explorar los palos</button><button class="btn" onclick="showPage('armonia')">Empezar armonía</button></div>
+  </div>
+  <div class="panel"><div class="kicker">Ruta recomendada</div><h3>De principiante a improvisar</h3>
+   <ol><li>Conocer los palos y su carácter.</li><li>Contar el compás con palmas.</li><li>Aprender intervalos y acordes.</li><li>Relacionar acordes con escalas.</li><li>Crear pequeñas falsetas.</li></ol>
+  </div>
+ </div>
+ <div class="tiles">
+  <div class="tile"><b>01 · Compás</b><span class="muted">Sentir el ritmo antes de correr.</span></div>
+  <div class="tile"><b>02 · Armonía</b><span class="muted">Entender por qué encajan las notas.</span></div>
+  <div class="tile"><b>03 · Mástil</b><span class="muted">Localizar notas y semitonos.</span></div>
+ </div>
+ <div class="panel" style="margin-top:18px"><h3>Una idea fundamental</h3><p>En flamenco no basta con tocar notas de una escala: importa dónde cae cada nota, qué acorde suena debajo, el compás, el estilo y la intención. La teoría te da un mapa; el oído y el ritmo te enseñan a caminarlo.</p></div>
+</section>
+
+<section id="palos" class="page">
+ <div class="kicker">Módulo 1</div><h2>Los palos flamencos</h2><p class="muted">Cada palo tiene personalidad, compás, aire y tradición. Selecciona uno para ver una primera ficha de estudio.</p>
+ <div class="palo-grid" id="paloGrid"></div><div class="panel detail" id="paloDetail"><h3>Elige un palo</h3><p>Verás aquí sus características y una orientación para empezar a escucharlo.</p></div>
+ <div class="note">Consejo: escucha primero cante, guitarra y palmas por separado. Después intenta reconocer cómo se relacionan.</div>
+</section>
+
+<section id="armonia" class="page">
+ <div class="kicker">Módulo 2</div><h2>Armonía sin misterios</h2>
+ <div class="panel"><h3>Las doce notas</h3><p>En el sistema temperado, cada traste de la guitarra sube un semitono. Entre Mi–Fa y Si–Do hay un semitono natural; en los demás pares de notas naturales hay un tono.</p><div class="chips" id="chromatic"></div>
+ <p class="muted">Do♯ y Re♭ suenan igual en la guitarra afinada de forma habitual, aunque su escritura depende de la función musical.</p></div>
+ <div class="panel"><h3>Armaduras: ejemplo de Sol mayor</h3><p>Sol mayor tiene un sostenido en su armadura: Fa♯. Su escala es:</p><div class="chips"><span class="chip">Sol</span><span class="chip">La</span><span class="chip">Si</span><span class="chip">Do</span><span class="chip">Re</span><span class="chip">Mi</span><span class="chip">Fa♯</span><span class="chip">Sol</span></div>
+ <p>La menor es el relativo menor de Do mayor: comparten armadura (ningún sostenido ni bemol), pero su centro tonal y sus funciones son distintos.</p></div>
+ <div class="panel"><h3>Constructor de acordes</h3><p>Selecciona una tónica y una familia para ver las notas que forman el acorde.</p>
+ <div class="row"><label>Tónica <select id="root"><option>Do</option><option>Do♯</option><option>Re</option><option>Mi♭</option><option>Mi</option><option>Fa</option><option>Fa♯</option><option>Sol</option><option>La♭</option><option>La</option><option>Si♭</option><option>Si</option></select></label>
+ <label>Tipo <select id="quality"><option value="maj">Mayor</option><option value="min">Menor</option><option value="7">Séptima dominante</option><option value="maj7">Mayor séptima</option><option value="m7">Menor séptima</option></select></label>
+ <button class="btn primary" id="buildChord">Construir acorde</button></div><div id="chordResult" class="chips"></div><p id="chordExplain" class="muted"></p></div>
+ <div class="note warn"><b>Una corrección importante:</b> la séptima de un acorde no se llama automáticamente sensible. En Sol7, por ejemplo, las notas son Sol–Si–Re–Fa. Si es un dominante, Fa (la séptima del acorde) suele resolver descendiendo a Mi, mientras que Si (la tercera y sensible de Do) tiende a subir a Do. Son funciones distintas.</div>
+ <div class="panel"><h3>Progresión de ejemplo: rumba</h3><p>La menor · Sol mayor · Fa mayor · Mi7</p><p>Prueba a tocar cada acorde despacio. Para improvisar, empieza usando notas del acorde en los tiempos fuertes y añade notas de paso escuchando cómo resuelven.</p><div class="chips"><span class="chip">Lam: La–Do–Mi</span><span class="chip">Sol: Sol–Si–Re</span><span class="chip">Fa: Fa–La–Do</span><span class="chip">Mi7: Mi–Sol♯–Si–Re</span></div></div>
+</section>
+
+<section id="guitarra" class="page">
+ <div class="kicker">Módulo 3</div><h2>Explora el mástil</h2><p>Vista simplificada de las seis cuerdas en afinación estándar, de la sexta (Mi grave) a la primera (Mi agudo). Pulsa una nota para escuchar su nombre leído en pantalla.</p>
+ <div class="panel"><div class="row"><label>Mostrar escala <select id="scaleRoot"><option value="0">Do</option><option value="2">Re</option><option value="4">Mi</option><option value="5">Fa</option><option value="7">Sol</option><option value="9">La</option><option value="11">Si</option></select></label><label>Tipo <select id="scaleType"><option value="major">Mayor</option><option value="minor">Menor natural</option></select></label><button class="btn primary" id="drawScale">Ver escala</button></div><div class="fretboard" id="fretboard"></div><p class="muted">Los puntos dorados indican notas de la escala seleccionada en los primeros 12 trastes. Es una herramienta de orientación, no un patrón único de digitación.</p></div>
+</section>
+
+
+<section id="videos" class="page">
+ <div class="kicker">Módulo 4 · Biblioteca audiovisual</div><h2>Aprende con vídeos</h2>
+ <p class="muted">Busca clases, falsetas, compás, palmas y explicaciones. Los vídeos se reproducen aquí cuando el autor permite la inserción.</p>
+ <div class="panel">
+  <h3>Conectar YouTube Data API v3</h3>
+  <p>Introduce tu nueva clave restringida. Se guarda únicamente en este navegador. No la publiques ni la incluyas en el código que compartas.</p>
+  <div class="row"><input id="ytKey" type="password" autocomplete="off" placeholder="Pega aquí tu nueva API key" style="flex:1;min-width:220px"><button class="btn" id="saveYtKey">Guardar clave</button><button class="btn" id="clearYtKey">Borrar</button></div>
+  <p id="ytKeyStatus" class="muted" aria-live="polite">Sin clave configurada. También puedes usar la biblioteca de enlaces de ejemplo más abajo.</p>
+  <div class="note warn"><b>Seguridad:</b> una clave usada desde una web es visible para el navegador. Limítala en Google Cloud por referente HTTP y permite únicamente YouTube Data API v3. Para una web pública con mayor protección, conviene un pequeño backend.</div>
+ </div>
+ <div class="panel">
+  <h3>Buscar contenido flamenco</h3>
+  <div class="row">
+   <input id="ytQuery" value="guitarra flamenca clase principiantes" aria-label="Buscar vídeos" style="flex:1;min-width:220px">
+   <select id="ytDuration" aria-label="Duración"><option value="any">Cualquier duración</option><option value="short">Menos de 4 minutos</option><option value="medium">4 a 20 minutos</option><option value="long">Más de 20 minutos</option></select>
+   <button class="btn primary" id="ytSearch">Buscar vídeos</button>
+  </div>
+  <div class="row" style="margin-top:12px">
+   <button class="btn ytPreset" data-q="guitarra flamenca soleá compás clase">Soleá</button>
+   <button class="btn ytPreset" data-q="guitarra flamenca alegrías de Cádiz falsetas">Alegrías de Cádiz</button>
+   <button class="btn ytPreset" data-q="bulerías guitarra flamenca compás palmas">Bulerías</button>
+   <button class="btn ytPreset" data-q="armonía musical guitarra flamenca acordes escalas">Armonía</button>
+   <button class="btn ytPreset" data-q="técnica guitarra flamenca rasgueos picado arpegio">Técnica</button>
+  </div>
+  <p id="ytMessage" class="muted" aria-live="polite"></p>
+  <div id="ytResults" class="palo-grid"></div>
+  <div class="row" style="justify-content:center;margin-top:14px"><button class="btn" id="ytMore" hidden>Ver más resultados</button></div>
+ </div>
+ <div class="panel"><h3>Biblioteca de búsqueda recomendada</h3>
+  <p>Si todavía no has configurado la API, puedes abrir estas búsquedas directamente en YouTube:</p>
+  <div class="chips">
+   <a class="chip" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=clases+guitarra+flamenca+principiantes">Guitarra desde cero ↗</a>
+   <a class="chip" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=compas+flamenco+12+tiempos">Compás de 12 ↗</a>
+   <a class="chip" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=alegrias+de+Cadiz+guitarra">Alegrías de Cádiz ↗</a>
+  </div>
+ </div>
+</section>
+
+<section id="practica" class="page">
+ <div class="kicker">Módulo 4</div><h2>Comprueba lo aprendido</h2>
+ <div class="panel"><div class="row" style="justify-content:space-between"><span id="questionCount" class="muted">Pregunta 1 de 6</span><span id="score" class="kicker">Aciertos: 0</span></div><div class="progress"><span id="progress"></span></div><h3 id="question"></h3><div id="answers"></div><p id="feedback" aria-live="polite"></p><button class="btn primary" id="nextQuestion" disabled>Siguiente pregunta</button></div>
+ <div class="panel"><h3>Reto de oído y guitarra</h3><p>Elige un acorde sencillo (por ejemplo, Sol mayor). Toca sus tres notas por separado, luego el acorde completo y después inventa una frase corta que termine en Sol. Repite con otro acorde.</p></div>
+</section>
+</main>
+<footer>Academia Flamenca · Material didáctico inicial. La tradición flamenca es mucho más amplia que cualquier resumen teórico.</footer>
+<script>
+const palos=[
+{name:"Soleá",air:"Profunda, sobria y reposada.",compas:"Compás de 12 tiempos, con acentos característicos en 3, 6, 8, 10 y 12 (según el conteo y la escuela).",study:"Empieza marcando el pulso lentamente y reconoce el cierre. Escucha distintas soleares para apreciar sus variantes."},
+{name:"Alegrías",air:"Luminosa, festiva y muy vinculada a Cádiz.",compas:"Compás de 12 tiempos emparentado con el de soleá, con un aire más vivo.",study:"Escucha el contraste entre llamada, falseta y cierre. La guitarra puede usar distintos tonos; no hay una única tonalidad obligatoria."},
+{name:"Bulerías",air:"Viva, flexible y juguetona; exige mucho sentido del compás.",compas:"Compás de 12 tiempos, a menudo sentido con velocidad y acentos desplazados.",study:"No empieces corriendo: trabaja primero el ciclo lento, las palmas y los cierres."},
+{name:"Tangos",air:"Rítmico, directo y bailable.",compas:"Compás binario o de cuatro pulsos, según cómo se cuente.",study:"Practica un patrón constante de palmas y acompaña con acordes sencillos sin perder el pulso."},
+{name:"Fandangos",air:"Familia amplia de estilos; pueden ser libres o acompasados.",compas:"Depende de la variante: algunos fandangos son libres y otros tienen compás.",study:"Distingue primero el fandango natural de los estilos locales y sus variantes."},
+{name:" seguiriyas".trim(),air:"Solemne, intensa y de gran profundidad expresiva.",compas:"Ciclo característico de 12 tiempos con acentuación propia; su sensación rítmica es distinta de soleá.",study:"Escucha el cante y estudia el patrón con calma antes de intentar acompañar."},
+{name:"Tientos",air:"Pausado, pesado y con aire de tangos ralentizados.",compas:"Compás binario/cuaternario emparentado con tangos, normalmente más reposado.",study:"Trabaja el peso del pulso y la claridad del acompañamiento; después observa cómo puede desembocar en tangos."}
+];
+const grid=document.getElementById('paloGrid'),detail=document.getElementById('paloDetail');
+palos.forEach((p,i)=>{let b=document.createElement('button');b.className='palo';b.innerHTML=`<b>${p.name}</b><small>${p.air}</small>`;b.onclick=()=>{document.querySelectorAll('.palo').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');detail.innerHTML=`<div class="kicker">Ficha de estudio</div><h3>${p.name}</h3><p><b>Carácter:</b> ${p.air}</p><p><b>Compás:</b> ${p.compas}</p><p><b>Por dónde empezar:</b> ${p.study}</p>`};grid.appendChild(b)});
+const chrom=["Do","Do♯ / Re♭","Re","Re♯ / Mi♭","Mi","Fa","Fa♯ / Sol♭","Sol","Sol♯ / La♭","La","La♯ / Si♭","Si"];document.getElementById('chromatic').innerHTML=chrom.map(n=>`<span class="chip">${n}</span>`).join('');
+const noteNames=["Do","Do♯","Re","Re♯","Mi","Fa","Fa♯","Sol","Sol♯","La","La♯","Si"];
+function chord(){let root=noteNames.indexOf(document.getElementById('root').value);let q=document.getElementById('quality').value;let intervals={maj:[0,4,7],min:[0,3,7],"7":[0,4,7,10],maj7:[0,4,7,11],m7:[0,3,7,10]}[q];let labels={maj:"mayor",min:"menor","7":"séptima dominante",maj7:"mayor séptima",m7:"menor séptima"};let notes=intervals.map(n=>noteNames[(root+n)%12]);document.getElementById('chordResult').innerHTML=notes.map(n=>`<span class="chip">${n}</span>`).join('');document.getElementById('chordExplain').textContent=`${document.getElementById('root').value} ${labels[q]}: intervalos de ${intervals.join(", ")} semitonos desde la tónica.`}
+document.getElementById('buildChord').onclick=chord;chord();
+const tuning=[4,11,7,2,9,4]; // Mi4, Si3, Sol3, Re3, La2, Mi2 from first to sixth
+function renderFretboard(){let root=+document.getElementById('scaleRoot').value,type=document.getElementById('scaleType').value;let steps=type==='major'?[0,2,4,5,7,9,11]:[0,2,3,5,7,8,10];let set=new Set(steps.map(x=>(root+x)%12));let names=["Mi","Si","Sol","Re","La","Mi"];let base=[4,11,7,2,9,4];let html='';for(let s=0;s<6;s++){html+=`<div class="string"><span class="string-name">${names[s]}</span>`;for(let f=0;f<=12;f++){let n=(base[s]+f)%12;html+=`<div class="fret ${set.has(n)?'hit':''}" title="${noteNames[n]} · traste ${f}">${set.has(n)?noteNames[n]:f===0?'0':''}</div>`}html+='</div>'}document.getElementById('fretboard').innerHTML=html}
+document.getElementById('drawScale').onclick=renderFretboard;renderFretboard();
+const questions=[
+{q:"¿Cuántos semitonos hay entre Mi y Fa?",a:["Uno","Dos","Tres"],c:0,e:"Mi y Fa son notas naturales consecutivas separadas por un semitono."},
+{q:"¿Qué nota lleva sostenido la armadura de Sol mayor?",a:["Do♯","Fa♯","Si♭"],c:1,e:"Sol mayor tiene un sostenido: Fa♯."},
+{q:"¿Qué notas forman un acorde de Sol mayor?",a:["Sol–Si–Re","Sol–La–Re","Sol–Si♭–Re"],c:0,e:"Un acorde mayor básico contiene tónica, tercera mayor y quinta justa."},
+{q:"¿La séptima de un acorde es siempre la sensible?",a:["Sí, siempre","No; son funciones distintas","Solo en acordes menores"],c:1,e:"La séptima del acorde y la sensible no son lo mismo. En Sol7, Fa es la séptima y Si es la sensible hacia Do."},
+{q:"¿Todos los fandangos tienen el mismo compás?",a:["Sí","No; hay variantes libres y acompasadas","Todos son de 12 tiempos"],c:1,e:"La familia de fandangos incluye formas libres y otras acompasadas."},
+{q:"¿Qué conviene trabajar antes de acelerar una bulería?",a:["Solo velocidad","Compás lento, palmas y cierres","Escalas a máxima velocidad"],c:1,e:"Primero interioriza el ciclo y los cierres; la velocidad llega después."}
+];let qi=0,score=0,answered=false;
+function loadQ(){let q=questions[qi];answered=false;document.getElementById('questionCount').textContent=`Pregunta ${qi+1} de ${questions.length}`;document.getElementById('question').textContent=q.q;document.getElementById('answers').innerHTML='';document.getElementById('feedback').textContent='';document.getElementById('nextQuestion').disabled=true;document.getElementById('nextQuestion').textContent=qi===questions.length-1?'Reiniciar':'Siguiente pregunta';document.getElementById('progress').style.width=(qi/questions.length*100)+'%';q.a.forEach((a,i)=>{let b=document.createElement('button');b.className='answer';b.textContent=a;b.onclick=()=>{if(answered)return;answered=true;if(i===q.c){score++;b.classList.add('correct');document.getElementById('feedback').textContent='¡Correcto! '+q.e}else{b.classList.add('wrong');document.getElementById('feedback').textContent='No exactamente. '+q.e;document.querySelectorAll('.answer')[q.c].classList.add('correct')}document.getElementById('score').textContent='Aciertos: '+score;document.getElementById('nextQuestion').disabled=false};document.getElementById('answers').appendChild(b)})}
+document.getElementById('nextQuestion').onclick=()=>{if(qi===questions.length-1){qi=0;score=0;document.getElementById('score').textContent='Aciertos: 0'}else qi++;loadQ()};loadQ();
+
+// YouTube Data API v3. La clave se introduce en el navegador y no se incluye en el archivo.
+const YT_KEY_STORE='academia_flamenca_youtube_key_v1';
+let ytPageToken=null, ytLastQuery='', ytCache=new Map();
+const ytKeyInput=document.getElementById('ytKey');
+const ytStatus=document.getElementById('ytKeyStatus');
+const savedYtKey=localStorage.getItem(YT_KEY_STORE);
+if(savedYtKey){ytKeyInput.value=savedYtKey;ytStatus.textContent='Clave guardada en este navegador.';}
+document.getElementById('saveYtKey').onclick=()=>{
+ const key=ytKeyInput.value.trim();
+ if(!key){ytStatus.textContent='Pega una clave válida antes de guardar.';return;}
+ localStorage.setItem(YT_KEY_STORE,key);ytStatus.textContent='Clave guardada en este navegador. Comprueba las restricciones en Google Cloud.';
+};
+document.getElementById('clearYtKey').onclick=()=>{
+ localStorage.removeItem(YT_KEY_STORE);ytKeyInput.value='';ytStatus.textContent='Clave borrada de este navegador.';
+};
+function ytMessage(msg){document.getElementById('ytMessage').textContent=msg;}
+function renderYtVideos(items,append=false){
+ const box=document.getElementById('ytResults');
+ if(!append)box.innerHTML='';
+ if(!items.length&&!append){box.innerHTML='<p class="muted">No se han encontrado vídeos. Prueba otra búsqueda.</p>';return;}
+ items.forEach(item=>{
+  const id=item.id?.videoId;if(!id)return;
+  const title=item.snippet?.title||'Vídeo de flamenco';
+  const channel=item.snippet?.channelTitle||'Canal de YouTube';
+  const thumb=item.snippet?.thumbnails?.medium?.url||item.snippet?.thumbnails?.default?.url||'';
+  const card=document.createElement('article');card.className='tile';
+  const img=document.createElement('img');img.src=thumb;img.alt='Miniatura del vídeo';img.loading='lazy';img.style='width:100%;border-radius:9px;aspect-ratio:16/9;object-fit:cover';
+  const h=document.createElement('h3');h.style='font:600 1rem/1.35 system-ui;margin:10px 0 5px';h.textContent=title;
+  const c=document.createElement('p');c.className='muted';c.textContent=channel;
+  const actions=document.createElement('div');actions.className='row';
+  const watch=document.createElement('a');watch.className='btn primary';watch.href='https://www.youtube.com/watch?v='+encodeURIComponent(id);watch.target='_blank';watch.rel='noopener';watch.textContent='Ver en YouTube ↗';
+  const embed=document.createElement('button');embed.className='btn';embed.textContent='Reproducir aquí';
+  embed.onclick=()=>{const frame=document.createElement('iframe');frame.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id);frame.title=title;frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';frame.allowFullscreen=true;frame.style='width:100%;aspect-ratio:16/9;border:0;border-radius:9px;margin-top:10px';const old=card.querySelector('iframe');if(old)old.remove();card.appendChild(frame);};
+  actions.append(watch,embed);card.append(img,h,c,actions);box.appendChild(card);
+ });
+}
+async function searchYouTube(loadMore=false){
+ const key=localStorage.getItem(YT_KEY_STORE)||ytKeyInput.value.trim();
+ if(!key){ytMessage('Primero introduce y guarda tu nueva API key.');return;}
+ const query=document.getElementById('ytQuery').value.trim();
+ if(!query){ytMessage('Escribe qué quieres aprender.');return;}
+ if(!loadMore){ytPageToken=null;ytLastQuery=query;document.getElementById('ytResults').innerHTML='';}
+ if(loadMore&&query!==ytLastQuery){ytMessage('La búsqueda ha cambiado. Pulsa Buscar vídeos.');return;}
+ const duration=document.getElementById('ytDuration').value;
+ const cacheKey=[query,duration,loadMore?ytPageToken:'first'].join('|');
+ if(ytCache.has(cacheKey)){const cached=ytCache.get(cacheKey);renderYtVideos(cached.items,loadMore);ytPageToken=cached.nextPageToken||null;document.getElementById('ytMore').hidden=!ytPageToken;ytMessage('Resultados recuperados de la caché local.');return;}
+ const btn=document.getElementById('ytSearch');btn.disabled=true;ytMessage('Buscando en YouTube…');
+ try{
+  const params=new URLSearchParams({part:'snippet',q:query,type:'video',maxResults:'12',regionCode:'ES',relevanceLanguage:'es',videoDuration:duration,safeSearch:'moderate',key});
+  if(loadMore&&ytPageToken)params.set('pageToken',ytPageToken);
+  const response=await fetch('https://www.googleapis.com/youtube/v3/search?'+params.toString());
+  const data=await response.json();
+  if(!response.ok){const reason=data.error?.errors?.[0]?.reason||data.error?.status||'Error';throw new Error(reason+': '+(data.error?.message||'No se pudo consultar YouTube'));}
+  ytCache.set(cacheKey,{items:data.items||[],nextPageToken:data.nextPageToken||null});
+  renderYtVideos(data.items||[],loadMore);ytPageToken=data.nextPageToken||null;
+  document.getElementById('ytMore').hidden=!ytPageToken;
+  ytMessage(`${data.items?.length||0} vídeos encontrados. Los resultados pertenecen a sus respectivos canales.`);
+ }catch(err){
+  ytMessage('No se pudo buscar: '+err.message+'. Comprueba que YouTube Data API v3 esté habilitada, la clave sea correcta y sus restricciones permitan este dominio.');
+ }finally{btn.disabled=false;}
+}
+document.getElementById('ytSearch').onclick=()=>searchYouTube(false);
+document.getElementById('ytMore').onclick=()=>searchYouTube(true);
+document.querySelectorAll('.ytPreset').forEach(b=>b.onclick=()=>{document.getElementById('ytQuery').value=b.dataset.q;searchYouTube(false);});
+document.getElementById('ytQuery').addEventListener('keydown',e=>{if(e.key==='Enter')searchYouTube(false);});
+
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
+</script>
+</body></html>
